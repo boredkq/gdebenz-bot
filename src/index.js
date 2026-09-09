@@ -179,6 +179,26 @@ bot.action(/^set_fuel_(.+)$/, async (ctx) => {
   return stationsHandlers.sendStationsList(ctx, 0, true);
 });
 
+// Меню выбора радиуса поиска
+bot.action('open_radius_menu', async (ctx) => {
+  const user = storage.getUser(ctx.from.id);
+  await ctx.answerCbQuery();
+  const text = `📏 <b>Выберите радиус поиска АЗС:</b>\n\nТекущий радиус: <b>${user.radiusKm || 15} км</b>. Чем больше радиус, тем больше заправок найдет бот (особенно полезно на трассах и в небольших населенных пунктах).`;
+  return ctx.editMessageText(text, {
+    parse_mode: 'HTML',
+    ...keyboards.radiusKeyboard(user.radiusKm || 15)
+  }).catch(() => {});
+});
+
+// Выбор конкретного радиуса
+bot.action(/^set_radius_(\d+)$/, async (ctx) => {
+  const r = parseInt(ctx.match[1], 10);
+  storage.updateUser(ctx.from.id, { radiusKm: r, page: 0 });
+
+  await ctx.answerCbQuery(`Радиус поиска изменен на ${r} км`);
+  return stationsHandlers.sendStationsList(ctx, 0, true);
+});
+
 // Переключение избранного
 bot.action(/^fav_toggle_(.+)$/, async (ctx) => {
   const osmId = ctx.match[1];

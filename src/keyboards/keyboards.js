@@ -74,9 +74,26 @@ function statusFilterKeyboard(selected = 'all') {
 }
 
 /**
+ * Клавиатура выбора радиуса поиска
+ */
+function radiusKeyboard(selected = 15) {
+  const radii = [5, 10, 15, 25, 50, 100];
+  const buttons = radii.map(r => {
+    const isSelected = selected === r;
+    return Markup.button.callback(isSelected ? `✅ ${r} км` : `${r} км`, `set_radius_${r}`);
+  });
+
+  return Markup.inlineKeyboard([
+    [buttons[0], buttons[1], buttons[2]],
+    [buttons[3], buttons[4], buttons[5]],
+    [Markup.button.callback('🔙 Назад к списку', 'back_to_stations')]
+  ]);
+}
+
+/**
  * Клавиатура списка АЗС с номерами и пагинацией
  */
-function stationListKeyboard(stations, page, totalPages, currentFuel = null) {
+function stationListKeyboard(stations, page, totalPages, currentFuel = null, radiusKm = 15) {
   const keyboard = [];
 
   // Кнопки для быстрого перехода в карточку конкретной станции (по 3 или 4 в ряд)
@@ -101,10 +118,13 @@ function stationListKeyboard(stations, page, totalPages, currentFuel = null) {
   }
   keyboard.push(navRow);
 
-  // Фильтры и обновление
+  // Фильтры, радиус и обновление
   keyboard.push([
     Markup.button.callback(`⛽ Топливо: ${currentFuel || 'Все'}`, 'open_fuel_menu'),
-    Markup.button.callback('🔄 Обновить', 'refresh_stations')
+    Markup.button.callback(`📏 Радиус: ${radiusKm || 15} км`, 'open_radius_menu')
+  ]);
+  keyboard.push([
+    Markup.button.callback('🔄 Обновить список', 'refresh_stations')
   ]);
 
   return Markup.inlineKeyboard(keyboard);
@@ -192,5 +212,6 @@ module.exports = {
   stationCardKeyboard,
   markStationKeyboard,
   highwaysKeyboard,
-  cityChatKeyboard
+  cityChatKeyboard,
+  radiusKeyboard
 };

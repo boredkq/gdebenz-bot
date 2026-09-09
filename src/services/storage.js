@@ -52,7 +52,7 @@ function getUser(userId) {
       fuelGrade: '95', // Самый популярный бензин по умолчанию
       statusFilter: 'all', // all | yes_only | no_queue
       sortBy: 'near', // near | cheap
-      radiusKm: 15,
+      radiusKm: parseInt(process.env.DEFAULT_SEARCH_RADIUS_KM, 10) || 15,
       favorites: [], // Список osm_id
       page: 0
     };

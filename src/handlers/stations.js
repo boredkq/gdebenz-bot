@@ -44,7 +44,7 @@ async function sendStationsList(ctx, page = 0, isEdit = false) {
       const fuelDesc = fuelGrade ? `маркой <b>АИ-${fuelGrade}</b>` : 'выбранными фильтрами';
       const emptyText = `⛽ <b>АЗС не найдены</b>\n\nВ радиусе ${radiusKm} км от <b>${locName}</b> с ${fuelDesc} сейчас нет станций с отметками.\n\nПопробуйте сменить фильтр топлива или выбрать другой город.`;
 
-      const kb = keyboards.stationListKeyboard([], 0, 0, fuelGrade);
+      const kb = keyboards.stationListKeyboard([], 0, 0, fuelGrade, radiusKm);
       if (isEdit) {
         return await ctx.editMessageText(emptyText, { parse_mode: 'HTML', ...kb }).catch(() => {});
       } else {
@@ -72,7 +72,7 @@ async function sendStationsList(ctx, page = 0, isEdit = false) {
     }).join('\n\n');
 
     const fullText = header + itemsText;
-    const kb = keyboards.stationListKeyboard(slice, validPage, totalPages, fuelGrade);
+    const kb = keyboards.stationListKeyboard(slice, validPage, totalPages, fuelGrade, radiusKm);
 
     if (isEdit) {
       return await ctx.editMessageText(fullText, {
