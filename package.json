@@ -1,0 +1,27 @@
+{
+  "name": "gdebenz-telegram-bot",
+  "version": "1.0.0",
+  "description": "Telegram-бот для сервиса ГдеБЕНЗ (gdebenz.ru) с полной функциональностью",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node tests/test_api_integration.js"
+  },
+  "keywords": [
+    "gdebenz",
+    "telegram-bot",
+    "fuel",
+    "petrol",
+    "azs",
+    "russia",
+    "telegraf"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "node-cache": "^5.1.2",
+    "telegraf": "^4.16.3"
+  }
+}
