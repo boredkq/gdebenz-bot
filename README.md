@@ -99,7 +99,32 @@ npm test
 
 ---
 
+## ☁️ Бесплатный хостинг с интеграцией GitHub
+
+Бот полностью подготовлен для деплоя на бесплатные платформы (встроен HTTP health-check сервер на порту `$PORT`):
+
+### Вариант 1: Koyeb (Рекомендуется — 100% бесплатно, 24/7 без засыпания)
+1. Зарегистрируйтесь на [koyeb.com](https://www.koyeb.com/) через ваш GitHub-аккаунт.
+2. Нажмите **«Create App»** -> выберите **«GitHub»**.
+3. Выберите репозиторий `gdebenz-bot`.
+4. В разделе **Environment Variables** добавьте:
+   - `BOT_TOKEN` = `ваш_токен_от_BotFather`
+5. Нажмите **«Deploy»**. При каждом пуше в `main` бот будет обновляться автоматически!
+
+### Вариант 2: Render.com
+1. Зарегистрируйтесь на [render.com](https://render.com/) через GitHub.
+2. Нажмите **«New +»** -> **«Web Service»**.
+3. Подключите репозиторий `gdebenz-bot`.
+4. Настройки сборки:
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. В разделе **Environment Variables** укажите `BOT_TOKEN`.
+6. Чтобы бесплатный инстанс не уходил в сон через 15 минут, добавьте бесплатный пинг полученного URL (например, через [cron-job.org](https://cron-job.org/) или [uptimerobot.com](https://uptimerobot.com/) каждые 10 минут).
+
+---
+
 ## 📁 Структура проекта
+
 
 ```text
 gdebenz-bot/
